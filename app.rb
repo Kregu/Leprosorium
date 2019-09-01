@@ -66,14 +66,14 @@ get '/login/form' do
   erb :login_form
 end
 
-def content? content
+def content_empty? content
   content.length < 1
 end
 
 post '/new' do
   content = params[:content]
 
-  if content? content
+  if content_empty? content
     @error = 'Type post text'
     return erb :new
   end
@@ -115,7 +115,7 @@ post '/details/:post_id' do
   post_id = params[:post_id]
   content = params[:content]
 
-  if content? content
+  if content_empty? content
     @error = 'Type comment text'
     redirect to ('/details/' + post_id)
   end
