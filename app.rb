@@ -66,10 +66,14 @@ get '/login/form' do
   erb :login_form
 end
 
+def content? content
+  content.length < 1
+end
+
 post '/new' do
   content = params[:content]
 
-  if content.length < 1
+  if content? content
     @error = 'Type post text'
     return erb :new
   end
@@ -110,6 +114,11 @@ post '/details/:post_id' do
 
   post_id = params[:post_id]
   content = params[:content]
+
+  if content? content
+    @error = 'Type comment text'
+    redirect to ('/details/' + post_id)
+  end
 
   @db.execute 'INSERT INTO Comments (content, post_id, created_date) VALUES (?,?,datetime())', [content, post_id]
 
