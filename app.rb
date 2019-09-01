@@ -76,7 +76,7 @@ post '/new' do
 
   @db.execute 'INSERT INTO Posts (content, created_date) VALUES (?,datetime())', [content]
 
-  redirect ('/')
+  redirect to ('/')
 end
 
 post '/login/attempt' do
@@ -108,9 +108,7 @@ post '/details/:post_id' do
   post_id = params[:post_id]
   content = params[:content]
 
+  @db.execute 'INSERT INTO Comments (content, post_id, created_date) VALUES (?,?,datetime())', [content, post_id]
 
-  # results = @db.execute 'SELECT * FROM Posts WHERE ID = (?)', [post_id]
-  # @row = results[0]
-
-  erb "You typed comment #{content} for post #{post_id}"
+  redirect to ('/details/' + post_id)
 end
