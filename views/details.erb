@@ -1,7 +1,6 @@
 <h4>Post details:</h4>
 <br>
 <p>
-
 	<%= @row['content'] %>
 	<br>
 	<br>
@@ -10,4 +9,14 @@
 	<br>
 <!-- 	<a href="/details/<%= @row['id']%>">Comments</a>
  -->
+</p>
+<h4>Comments</h4>
+<p>
+	<form action="/details/<%= @row['id'] %>" method="POST" role="form">
+
+	    <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="6" placeholder="Type comment text here"></textarea>
+		</br>
+	 	<button type="submit" class="btn btn-primary">Add comment</button>
+
+	</form>
 </p>
