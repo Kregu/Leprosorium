@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/reloader'
 
 configure do
   enable :sessions
@@ -22,6 +23,15 @@ end
 get '/' do
   erb 'Can you handle a <a href="/secure/place">secret</a>?'
 end
+
+get '/posts' do
+  erb 'Can you handle a <a href="/secure/place">secret</a>?'
+end
+
+get '/new' do
+  erb :new
+end
+
 
 get '/login/form' do
   erb :login_form
