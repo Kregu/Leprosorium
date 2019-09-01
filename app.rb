@@ -85,3 +85,9 @@ end
 get '/secure/place' do
   erb 'This is a secret place that only <%=session[:identity]%> has access to!'
 end
+
+get '/details/:post_id' do
+
+  post_id = params[:post_id]
+  erb "Display information for post with id #{post_id}"
+end
