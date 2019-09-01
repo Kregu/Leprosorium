@@ -41,12 +41,12 @@ configure do
 end
 
 get '/' do
-  erb 'Can you handle a <a href="/secure/place">secret</a>?'
+  erb :index
 end
 
-get '/posts' do
-  erb 'Can you handle a <a href="/secure/place">secret</a>?'
-end
+# get '/posts' do
+#   erb 'Can you handle a <a href="/secure/place">secret</a>?'
+# end
 
 get '/new' do
   erb :new
