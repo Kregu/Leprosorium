@@ -38,6 +38,14 @@ configure do
                                                   "created_date"  TEXT,
                                                   "content" TEXT
                                                   )'
+
+  init_db
+  @db.execute 'CREATE TABLE IF NOT EXISTS "Comments" (
+                                                  "id"  INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                  "created_date"  TEXT,
+                                                  "content" TEXT,
+                                                  "post_id" INTEGER
+                                                  )'                                                  
 end
 
 get '/' do
