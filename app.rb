@@ -59,7 +59,7 @@ get '/login/form' do
 end
 
 post '/new' do
-  content=params[:content]
+  content = params[:content]
 
   if content.length < 1
     @error = 'Type post text'
@@ -93,4 +93,16 @@ get '/details/:post_id' do
   @row = results[0]
 
   erb :details
+end
+
+post '/details/:post_id' do
+
+  post_id = params[:post_id]
+  content = params[:content]
+
+
+  # results = @db.execute 'SELECT * FROM Posts WHERE ID = (?)', [post_id]
+  # @row = results[0]
+
+  erb "You typed comment #{content} for post #{post_id}"
 end
