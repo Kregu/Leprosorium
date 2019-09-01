@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sqlite3'
 
 configure do
   enable :sessions
@@ -20,6 +21,16 @@ before '/secure/*' do
   end
 end
 
+
+def init_db
+  @db = SQLite3::Database.new 'leprosorium.db'
+  @db.results_as_hash = true
+end
+
+before do
+  init_db
+end
+
 get '/' do
   erb 'Can you handle a <a href="/secure/place">secret</a>?'
 end
@@ -35,6 +46,12 @@ end
 
 get '/login/form' do
   erb :login_form
+end
+
+post '/new' do
+  content=params[:content]
+
+  erb "You typed #{content}"
 end
 
 post '/login/attempt' do
