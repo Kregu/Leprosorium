@@ -9,14 +9,14 @@ end
 
 helpers do
   def username
-    session[:identity] ? session[:identity] : 'Hello stranger'
+    session[:identity] || 'Hello stranger'
   end
 end
 
 before '/secure/*' do
   unless session[:identity]
     session[:previous_url] = request.path
-    @error = 'Sorry, you need to be logged in to visit ' + request.path
+    @error = "Sorry, you need to be logged in to visit #{request.path}"
     halt erb(:login_form)
   end
 end
@@ -45,7 +45,7 @@ configure do
                                                   "created_date"  TEXT,
                                                   "content" TEXT,
                                                   "post_id" INTEGER
-                                                  )'                                                  
+                                                  )'
 end
 
 get '/' do
@@ -66,14 +66,10 @@ get '/login/form' do
   erb :login_form
 end
 
-def content_empty? content
-  content.length < 1
-end
-
 post '/new' do
   content = params[:content]
 
-  if content_empty? content
+  if content.empty?
     @error = 'Type post text'
     return erb :new
   end
@@ -104,7 +100,7 @@ get '/details/:post_id' do
   results = @db.execute 'SELECT * FROM Posts WHERE ID = (?)', [post_id]
   @row = results[0]
 
-  #select comments for the post
+  # select comments for the post
   @comments = @db.execute 'SELECT * FROM Comments WHERE post_id = ? ORDER BY id', [post_id]
 
   erb :details
@@ -115,12 +111,12 @@ post '/details/:post_id' do
   post_id = params[:post_id]
   content = params[:content]
 
-  if content_empty? content
+  if content.empty?
     @error = 'Type comment text'
-    redirect to ('/details/' + post_id)
+    redirect to ("/details/#{post_id}")
   end
 
   @db.execute 'INSERT INTO Comments (content, post_id, created_date) VALUES (?,?,datetime())', [content, post_id]
 
-  redirect to ('/details/' + post_id)
+  redirect to ("/details/#{post_id}")
 end
