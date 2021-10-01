@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sinatra'
-require 'sinatra/reloader'
+require 'sinatra/reloader' if development?
 require 'sqlite3'
 
 configure do
@@ -95,7 +95,7 @@ get '/secure/place' do
 end
 
 get '/details/:post_id' do
-
+  # :post_id received from url
   post_id = params[:post_id]
   results = @db.execute 'SELECT * FROM Posts WHERE ID = (?)', [post_id]
   @row = results[0]
@@ -107,7 +107,7 @@ get '/details/:post_id' do
 end
 
 post '/details/:post_id' do
-
+  # :post_id received from url
   post_id = params[:post_id]
   content = params[:content]
 
